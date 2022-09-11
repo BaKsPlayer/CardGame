@@ -63,8 +63,10 @@ MonoBehaviour:
   nameText: {fileID: 8421796187488794819}
   descriptionText: {fileID: 6543111199803179582}
   manaText: {fileID: 4309035971296734884}
-  lifeText: {fileID: 4266772857130568111}
+  hpText: {fileID: 4266772857130568111}
   damageText: {fileID: 718093346658503229}
+  defaultTextColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightedTextColor: {r: 1, g: 0.7978194, b: 0.2783019, a: 1}
 --- !u!1 &1508929684838275895
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,7 +353,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 144185eae76ec47f583811ae20d8507a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test: 
 --- !u!114 &1745367840739336746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -857,7 +858,7 @@ GameObject:
   - component: {fileID: 3466406447559514613}
   - component: {fileID: 4266772857130568111}
   m_Layer: 5
-  m_Name: Life (Text)
+  m_Name: HP (Text)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -13,26 +13,26 @@ MonoBehaviour:
   m_Name: Deck
   m_EditorClassIdentifier: 
   cards:
-  - name: Korova
-    description: 
-    mana: 1
-    damage: 1
-    life: 1
-  - name: Chillwind Yeti
-    description: 
-    mana: 4
-    damage: 4
-    life: 5
-  - name: Azure Drake
-    description: '<b>Spell Damage +1</b>
-
-      <b>Battlecry:</b> Draw a card'
-    mana: 5
-    damage: 4
-    life: 4
-  - name: Ragnaros
-    description: Can't attack. At the end of your turn, deal 8 damage to a random
+  - Name: Korova
+    Description: 
+    Mana: 1
+    Damage: 1
+    HP: 1
+  - Name: Ragnaros
+    Description: Can't attack. At the end of your turn, deal 8 damage to a random
       enemy.
-    mana: 8
-    damage: 8
-    life: 8
+    Mana: 8
+    Damage: 8
+    HP: 8
+  - Name: Chillwind Yeti
+    Description: 
+    Mana: 4
+    Damage: 4
+    HP: 5
+  - Name: Azure Drake
+    Description: '<b>Spell Damage +1</b>
+
+      <b>Battlecry:</b> Draw a card.'
+    Mana: 5
+    Damage: 4
+    HP: 4
