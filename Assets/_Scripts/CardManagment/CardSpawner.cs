@@ -16,7 +16,7 @@ public class CardSpawner : MonoBehaviour
             CardInfo randomCardInfo = deckController.GetRandomCardInfo();
 
             var newCard = Instantiate(cardPrefab, transform);
-            newCard.Initialize(randomCardInfo, hand);
+            newCard.Initialize(randomCardInfo);
         }
 
         hand.Initialize();

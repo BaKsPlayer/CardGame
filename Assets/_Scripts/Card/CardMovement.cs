@@ -1,38 +1,83 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class CardMovement : MonoBehaviour
+public class CardMovement : MonoBehaviour, IBeginDragHandler,IEndDragHandler,IDragHandler
 {
-    [SerializeField] private Vector3 rotationOffset = new Vector3(0, 0, -10);
-    [SerializeField] private Vector2 positionOffset = new Vector2(100, -14);
+    private Vector2 positionOffsetOnDrag;
+    private Vector2 startPosition;
+    private Vector3 startRotation;
 
-    private Vector3 CalculatePosition(int siblingIndex, int totalSiblingsCount)
+    private Card card;
+
+    private bool isCardOnField;
+
+    public void Initialize(Card card)
     {
-        var index = siblingIndex - (totalSiblingsCount - 1) / 2f;
-        var absIndex = Mathf.Abs(index);
-
-        return new Vector2(positionOffset.x * index, positionOffset.y * Mathf.Pow(2, absIndex));
+        this.card = card;
     }
 
-    private Vector3 CalculateRotation(int siblingIndex, int totalSiblingsCount)
-    {
-        return rotationOffset * (siblingIndex - (totalSiblingsCount - 1) / 2f);
-    }
-
-    private void SetPositionAndRotation(Vector3 position, Vector3 rotation)
+    private void SetPositionAndRotation(Vector3 position, Vector3 rotation, float duration = 1f, Action callback = null)
     {
         transform.DOKill();
-        transform.DOLocalMove(position, 1);
-        transform.DOLocalRotate(rotation, 1);
+        transform.DOLocalMove(position, duration).OnComplete(() => callback?.Invoke());
+        transform.DOLocalRotate(rotation, duration);
     }
 
-    public void CardsCountChanged(int siblingIndex, int totalSiblingsCount)
+    public void CardsCountChanged(Layout layout,int siblingIndex, int totalSiblingsCount)
     {
-        Vector3 position = CalculatePosition(siblingIndex, totalSiblingsCount);
-        Vector3 rotation = CalculateRotation(siblingIndex, totalSiblingsCount);
+        Vector3 position = layout.CalculatePosition(siblingIndex, totalSiblingsCount);
+        Vector3 rotation = layout.CalculateRotation(siblingIndex, totalSiblingsCount);
 
         SetPositionAndRotation(position, rotation);
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        if (isCardOnField)
+        {
+            return;
+        }
+
+        transform.DOKill();
+
+        startPosition = transform.localPosition;
+        startRotation = transform.localEulerAngles;
+
+        positionOffsetOnDrag = new Vector2(transform.position.x, transform.position.y) - eventData.position;
+
+        transform.DOLocalRotate(Vector3.zero, 0.4f);
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (isCardOnField)
+        {
+            return;
+        }
+
+        transform.position = eventData.position + positionOffsetOnDrag;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        if (isCardOnField)
+        {
+            return;
+        }
+
+        if ((transform.localPosition.y - startPosition.y) <= 200)
+        {
+            SetPositionAndRotation(startPosition, startRotation);
+        }
+        else
+        {
+            isCardOnField = true;
+            Field.Instance.AssignParentToCard(card);
+            Card.OnCardRemoved.Invoke(card);
+        }
     }
 }

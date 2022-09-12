@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(CardMovement))]
 public class Card : MonoBehaviour
@@ -19,17 +20,18 @@ public class Card : MonoBehaviour
     [SerializeField] private Color highlightedTextColor;
 
     private CardInfo cardInfo;
-    private Hand hand;
     private CardMovement movement;
+
+    public static UnityAction<Card> OnCardRemoved;
 
     public CardMovement Movement => movement;
 
-    public void Initialize(CardInfo cardInfo, Hand hand)
+    public void Initialize(CardInfo cardInfo)
     {
         this.cardInfo = cardInfo;
-        this.hand = hand;
 
         movement = GetComponent<CardMovement>();
+        movement.Initialize(this);
 
         nameText.text = cardInfo.Name;
         descriptionText.text = cardInfo.Description;
@@ -56,7 +58,7 @@ public class Card : MonoBehaviour
             case StatsType.HP:
                 if (value <= 0)
                 {
-                    hand.RemoveCard(this);
+                    OnCardRemoved?.Invoke(this);
                     Destroy(gameObject);
                     return;
                 }

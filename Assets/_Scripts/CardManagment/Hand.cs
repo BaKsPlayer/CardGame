@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(HandLayout))]
 public class Hand : MonoBehaviour
 {
+    private HandLayout layout;
+
     private List<Card> cards = new List<Card>();
     public List<Card> Cards => cards;
 
     public void Initialize()
     {
+        layout = GetComponent<HandLayout>();
+        Card.OnCardRemoved += RemoveCard;
+
         cards = new List<Card>();
 
         foreach (Transform child in transform)
@@ -19,18 +25,22 @@ public class Hand : MonoBehaviour
 
         for (int i = 0; i < cards.Count; i++)
         {
-            cards[i].Movement.CardsCountChanged(i, cards.Count);
+            cards[i].Movement.CardsCountChanged(layout,i, cards.Count);
         }
+    }
+
+    private void OnDestroy()
+    {
+        Card.OnCardRemoved -= RemoveCard;
     }
 
     public void RemoveCard(Card cardToRemove)
     {
         cards.Remove(cardToRemove);
-        Destroy(cardToRemove.gameObject);
 
         for (int i = 0; i < cards.Count; i++)
         {
-            cards[i].Movement.CardsCountChanged(i, cards.Count);
+            cards[i].Movement.CardsCountChanged(layout, i, cards.Count);
         }
     }
 }
