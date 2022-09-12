@@ -5,7 +5,7 @@ using UnityEngine;
 public class CardSpawner : MonoBehaviour
 {
     [SerializeField] private DeckController deckController;
-    [SerializeField] private CardStatsChanger cardStatsChanger;
+    [SerializeField] private Hand hand;
     [SerializeField] private Card cardPrefab;
 
     private void Awake()
@@ -13,11 +13,12 @@ public class CardSpawner : MonoBehaviour
         int startCardsCount = Random.Range(4, 7);
         for (int i = 0; i < startCardsCount; i++)
         {
+            CardInfo randomCardInfo = deckController.GetRandomCardInfo();
+
             var newCard = Instantiate(cardPrefab, transform);
-            newCard.GetComponent<RectTransform>().localPosition = new Vector2((100 * i) , newCard.GetComponent<RectTransform>().position.y);
-            newCard.Initialize(deckController.GetRandomCardInfo());
+            newCard.Initialize(randomCardInfo, hand);
         }
 
-        cardStatsChanger.Initialize();
+        hand.Initialize();
     }
 }

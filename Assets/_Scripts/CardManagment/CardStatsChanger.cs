@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-
 public enum StatsType
 {
     Mana,
@@ -18,39 +17,29 @@ public class CardStatsChanger : MonoBehaviour
 {
     [SerializeField] private Slider slider;
     [SerializeField] private TextMeshProUGUI sliderValueText;
+    [SerializeField] private Hand hand;
 
     private int currentCardIndex;
     private StatsType statsTypeToChange;
-    private List<Card> cards = new List<Card>();
 
-    public void Initialize()
+    public void HighlightToChangeCardStats()
     {
-        cards = new List<Card>();
-
-        foreach (Transform child in transform)
-        {
-            cards.Add(child.GetComponent<Card>());
-        }
-    }
-
-    public void ChangeCardStats()
-    {
-        cards[currentCardIndex].HighlightStats(statsTypeToChange, false);
+        hand.Cards[currentCardIndex].HighlightStats(statsTypeToChange, false);
 
         currentCardIndex = 0;
         statsTypeToChange = (StatsType)Random.Range(0, Enum.GetValues(typeof(StatsType)).Length);
 
-        cards[currentCardIndex].HighlightStats(statsTypeToChange, true);
+        hand.Cards[currentCardIndex].HighlightStats(statsTypeToChange, true);
     }
 
     public void ApplyChanges()
     {
-        cards[currentCardIndex].ChangeStats(statsTypeToChange, (int)slider.value);
+        hand.Cards[currentCardIndex].ChangeStats(statsTypeToChange, (int)slider.value);
     }
 
     public void GoToNextCard()
     {
-        cards[currentCardIndex].HighlightStats(statsTypeToChange, false) ;
+        hand.Cards[currentCardIndex].HighlightStats(statsTypeToChange, false) ;
 
         currentCardIndex++;
         if (currentCardIndex >= transform.childCount)
@@ -58,7 +47,7 @@ public class CardStatsChanger : MonoBehaviour
             currentCardIndex = 0;
         }
 
-        cards[currentCardIndex].HighlightStats(statsTypeToChange, true);
+        hand.Cards[currentCardIndex].HighlightStats(statsTypeToChange, true);
     }
 
     public void SliderValueChanged()

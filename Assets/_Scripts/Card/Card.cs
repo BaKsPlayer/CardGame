@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+[RequireComponent(typeof(CardMovement))]
 public class Card : MonoBehaviour
 {
     [SerializeField] private CardAvatar avatar;
@@ -18,10 +19,17 @@ public class Card : MonoBehaviour
     [SerializeField] private Color highlightedTextColor;
 
     private CardInfo cardInfo;
+    private Hand hand;
+    private CardMovement movement;
 
-    public void Initialize(CardInfo cardInfo)
+    public CardMovement Movement => movement;
+
+    public void Initialize(CardInfo cardInfo, Hand hand)
     {
         this.cardInfo = cardInfo;
+        this.hand = hand;
+
+        movement = GetComponent<CardMovement>();
 
         nameText.text = cardInfo.Name;
         descriptionText.text = cardInfo.Description;
@@ -38,16 +46,23 @@ public class Card : MonoBehaviour
         switch (statsType)
         {
             case StatsType.Mana:
+                StartCoroutine(StatsFiller.FillStats(manaText, cardInfo.Mana, value));
                 cardInfo.Mana = value;
-                manaText.text = value.ToString();
                 break;
             case StatsType.Damage:
+                StartCoroutine(StatsFiller.FillStats(damageText, cardInfo.Damage, value));
                 cardInfo.Damage = value;
-                damageText.text = value.ToString();
                 break;
             case StatsType.HP:
+                if (value <= 0)
+                {
+                    hand.RemoveCard(this);
+                    Destroy(gameObject);
+                    return;
+                }
+
+                StartCoroutine(StatsFiller.FillStats(hpText, cardInfo.HP, value));
                 cardInfo.HP = value;
-                hpText.text = value.ToString();
                 break;
         }
     }

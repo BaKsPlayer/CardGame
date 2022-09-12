@@ -1,22 +1,22 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
 public class CardAvatar : MonoBehaviour
 {
-    private RawImage avatar;
+    private Image avatar;
     
     public void Initialize()
     {
-        avatar ??= GetComponent<RawImage>();
+        avatar ??= GetComponent<Image>();
         StartCoroutine(RandByImageParser.Instance.ParseImage(SetAvatarSprite));
     }
 
     private void SetAvatarSprite(byte[] imageBytes)
     {
         Vector2Int textureSize = new Vector2Int((int)avatar.rectTransform.sizeDelta.x, (int)avatar.rectTransform.sizeDelta.y);
-        avatar.texture = ImageConverter.Instance.ConvertBytesToTexture(textureSize.x, textureSize.y, imageBytes);
+        avatar.sprite = ImageConverter.Instance.ConvertBytesToSprite(textureSize.x, textureSize.y, imageBytes);
     }
 }

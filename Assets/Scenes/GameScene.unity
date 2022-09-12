@@ -209,7 +209,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 236178602}
         m_TargetAssemblyTypeName: CardStatsChanger, Assembly-CSharp
-        m_MethodName: ChangeCardStats
+        m_MethodName: HighlightToChangeCardStats
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -479,6 +479,7 @@ GameObject:
   - component: {fileID: 236178600}
   - component: {fileID: 236178601}
   - component: {fileID: 236178602}
+  - component: {fileID: 236178603}
   m_Layer: 5
   m_Name: Cards
   m_TagString: Untagged
@@ -519,7 +520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deckController: {fileID: 236178601}
-  cardStatsChanger: {fileID: 236178602}
+  hand: {fileID: 236178603}
   cardPrefab: {fileID: 1746442934372763681, guid: fbfe58408ebdc44e7952356456077dac, type: 3}
 --- !u!114 &236178601
 MonoBehaviour:
@@ -548,6 +549,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 444439665}
   sliderValueText: {fileID: 314248850}
+  hand: {fileID: 236178603}
+--- !u!114 &236178603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236178598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3fe8c410e4045a988a0dba6b5bb1ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &314248848
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,7 +790,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 236178602}
         m_TargetAssemblyTypeName: CardStatsChanger, Assembly-CSharp
-        m_MethodName: SliderValueChanges
+        m_MethodName: SliderValueChanged
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
