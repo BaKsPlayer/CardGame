@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -24,7 +22,7 @@ public class Card : MonoBehaviour
     private CardInfo cardInfo;
     private CardMovement movement;
 
-    public static UnityAction<Card> OnCardRemoved;
+    public static UnityAction<Card> OnCardRemovedFromHand;
 
     public CardMovement Movement => movement;
 
@@ -60,7 +58,7 @@ public class Card : MonoBehaviour
             case StatsType.HP:
                 if (value <= 0)
                 {
-                    OnCardRemoved?.Invoke(this);
+                    OnCardRemovedFromHand?.Invoke(this);
                     Destroy(gameObject);
                     return;
                 }

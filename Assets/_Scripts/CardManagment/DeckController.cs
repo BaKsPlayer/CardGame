@@ -36,10 +36,10 @@ public class DeckController : MonoBehaviour
             return new CardInfo();
         }
 
-        var randomIndex = Random.Range(0, avaiableDeck.Count);
-        var randomCard = avaiableDeck[randomIndex];
+        int randomIndex = Random.Range(0, avaiableDeck.Count);
+        CardInfo randomCardInfo = avaiableDeck[randomIndex];
         avaiableDeck.RemoveAt(randomIndex);
 
-        return randomCard;
+        return randomCardInfo;
     }
 }

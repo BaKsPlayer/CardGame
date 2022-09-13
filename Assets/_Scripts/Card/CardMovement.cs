@@ -81,7 +81,7 @@ public class CardMovement : MonoBehaviour, IBeginDragHandler,IEndDragHandler,IDr
         {
             isCardOnField = true;
             Field.Instance.AssignParentToCard(card);
-            Card.OnCardRemoved.Invoke(card);
+            Card.OnCardRemovedFromHand.Invoke(card);
         }
     }
 }

@@ -14,7 +14,7 @@ public class Hand : MonoBehaviour
     public void Initialize()
     {
         layout = GetComponent<HandLayout>();
-        Card.OnCardRemoved += RemoveCard;
+        Card.OnCardRemovedFromHand += RemoveCard;
 
         cards = new List<Card>();
 
@@ -31,7 +31,7 @@ public class Hand : MonoBehaviour
 
     private void OnDestroy()
     {
-        Card.OnCardRemoved -= RemoveCard;
+        Card.OnCardRemovedFromHand -= RemoveCard;
     }
 
     public void RemoveCard(Card cardToRemove)
