@@ -42,6 +42,8 @@ public class CardMovement : MonoBehaviour, IBeginDragHandler,IEndDragHandler,IDr
             return;
         }
 
+        card.SetActiveGlow(true);
+
         transform.DOKill();
 
         startPosition = transform.localPosition;
@@ -68,6 +70,8 @@ public class CardMovement : MonoBehaviour, IBeginDragHandler,IEndDragHandler,IDr
         {
             return;
         }
+
+        card.SetActiveGlow(false);
 
         if ((transform.localPosition.y - startPosition.y) <= 200)
         {

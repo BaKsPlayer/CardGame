@@ -9,6 +9,8 @@ public class Card : MonoBehaviour
 {
     [SerializeField] private CardAvatar avatar;
 
+    [SerializeField] private GameObject glow;
+
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI descriptionText;
 
@@ -85,5 +87,10 @@ public class Card : MonoBehaviour
                 hpText.color = colorToSet;
                 break;
         }
+    }
+
+    public void SetActiveGlow(bool value)
+    {
+        glow.SetActive(value);
     }
 }
